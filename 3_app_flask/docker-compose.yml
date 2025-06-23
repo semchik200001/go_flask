@@ -1,0 +1,26 @@
+services:
+  v1:
+    build: .
+    container_name: flask_v1
+    command: python v1app.py
+
+  v2:
+    build: .
+    container_name: flask_v2
+    command: python v2app.py
+
+  v3:
+    build: .
+    container_name: flask_v3
+    command: python v3app.py
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - v1
+      - v2
+      - v3
